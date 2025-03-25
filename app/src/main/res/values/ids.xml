@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="studio" type="id">studio</item>
+    <item name="rating" type="id">rating</item>
+    <item name="year" type="id" />
+    <item name="title" type="id">title</item>
+</resources>
