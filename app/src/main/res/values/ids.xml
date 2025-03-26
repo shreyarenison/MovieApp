@@ -4,4 +4,9 @@
     <item name="rating" type="id">rating</item>
     <item name="year" type="id" />
     <item name="title" type="id">title</item>
+    <item name="titleTextView" type="id">titleTextView</item>
+    <item name="yearTextView" type="id">yearTextView</item>
+    <item name="plotTextView" type="id">plotTextView</item>
+    <item name="ratingTextView" type="id">ratingTextView</item>
+    <item name="posterImageView" type="id">posterImageView</item>
 </resources>
