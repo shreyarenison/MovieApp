@@ -34,21 +34,20 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MainActivity", "onCreate started");
 
-        // Initialize UI elements
+        // initialize UI elements
         searchEditText = findViewById(R.id.searchEditText);
-        searchButton = findViewById(R.id.searchButton);
+        searchButton = findViewById(R.id.searchButton); // Ensure the button is correctly referenced
         movieRecyclerView = findViewById(R.id.movieRecyclerView);
         movieRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        if (searchButton == null) {
-            Log.e("MainActivity", "searchButton is NULL! Check activity_main.xml.");
-            Toast.makeText(this, "Error: Search button is missing!", Toast.LENGTH_LONG).show();
+        if (searchButton != null) {
+            Log.d("MainActivity", "Search Button is found and ready");
         } else {
-            Log.d("MainActivity", "searchButton found");
-            searchButton.setVisibility(View.VISIBLE);
-            searchButton.setOnClickListener(v -> searchMovies(searchEditText.getText().toString()));
+            Log.e("MainActivity", "Search Button is not found!");
         }
+
+
+        searchButton.setOnClickListener(v -> searchMovies(searchEditText.getText().toString()));
     }
 
     private void searchMovies(String title) {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Log.d("MainActivity", "🔍 Searching for: " + title);
+        Log.d("MainActivity", "Searching for movie: " + title);
 
         String apiKey = "59c74b7b";
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
@@ -68,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     movieAdapter = new MovieAdapter(MainActivity.this, response.body().getSearch());
                     movieRecyclerView.setAdapter(movieAdapter);
-                    Log.d("MainActivity", "Movies loaded");
+                    Log.d("MainActivity", "Movies loaded successfully");
                 } else {
-                    Log.e("MainActivity", "No movies found!");
+                    Log.e("MainActivity", "No movies found");
                     Toast.makeText(MainActivity.this, "No movies found!", Toast.LENGTH_SHORT).show();
                 }
             }
