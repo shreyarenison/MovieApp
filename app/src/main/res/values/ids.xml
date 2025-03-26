@@ -9,4 +9,5 @@
     <item name="plotTextView" type="id">plotTextView</item>
     <item name="ratingTextView" type="id">ratingTextView</item>
     <item name="posterImageView" type="id">posterImageView</item>
+    <item name="searchButton" type="id">searchButton</item>
 </resources>

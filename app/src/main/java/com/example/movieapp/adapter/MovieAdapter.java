@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movieapp.MainActivity;
 import com.example.movieapp.MovieDetailsActivity;
 import com.example.movieapp.R;
 import com.example.movieapp.model.Movie;
+import com.example.movieapp.model.MovieResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,6 +26,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieAdapter(Context context, List<Movie> movieList) {
         this.context = context;
         this.movieList = movieList;
+    }
+
+    public MovieAdapter(MainActivity context, List<MovieResponse.Movie> search) {
     }
 
     @Override
