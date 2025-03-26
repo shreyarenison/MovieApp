@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private EditText searchEditText;
-    private Button searchButton;
     private RecyclerView movieRecyclerView;
     private MovieAdapter movieAdapter;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         // initialize UI elements
         searchEditText = findViewById(R.id.searchEditText);
-        searchButton = findViewById(R.id.searchButton); // Ensure the button is correctly referenced
+        Button searchButton = findViewById(R.id.searchButton);
         movieRecyclerView = findViewById(R.id.movieRecyclerView);
         movieRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        assert searchButton != null;
         searchButton.setOnClickListener(v -> searchMovies(searchEditText.getText().toString()));
     }
 
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         apiService.getMovies(title, apiKey).enqueue(new Callback<MovieResponse>() {
             @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+            public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                 if (response.body() != null) {
                     movieAdapter = new MovieAdapter(MainActivity.this, response.body().getSearch());
                     movieRecyclerView.setAdapter(movieAdapter);
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
                 Log.e("MainActivity", "Error fetching data: " + t.getMessage(), t);
                 Toast.makeText(MainActivity.this, "Failed to fetch movie data. Please try again.", Toast.LENGTH_SHORT).show();
             }
