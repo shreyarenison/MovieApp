@@ -52,7 +52,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void fetchMovieDetails(String imdbID) {
         // API key and service initialization
-        String apiKey = "59c74b7b"; // Replace with your API key
+        String apiKey = "59c74b7b";
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
         // make API call to fetch movie details
