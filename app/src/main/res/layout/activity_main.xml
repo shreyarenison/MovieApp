@@ -13,9 +13,10 @@
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search Movies"
-        android:padding="10dp"
         android:background="@android:drawable/editbox_background"
+        android:hint="Search Movies"
+        android:minHeight="48dp"
+        android:padding="10dp"
         android:textSize="18sp" />
 
 

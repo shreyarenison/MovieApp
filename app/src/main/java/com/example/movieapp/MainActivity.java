@@ -1,6 +1,5 @@
 package com.example.movieapp;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,52 +32,53 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // initialize UI elements
+        Log.d("MainActivity", "onCreate started");
+
+        // Initialize UI elements
         searchEditText = findViewById(R.id.searchEditText);
         searchButton = findViewById(R.id.searchButton);
         movieRecyclerView = findViewById(R.id.movieRecyclerView);
-
         movieRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (searchButton == null) {
-            Log.e("MainActivity", "Search button is NULL! Check activity_main.xml.");
-            Toast.makeText(this, "Error: Search button not found!", Toast.LENGTH_LONG).show();
-        } else {
-            Log.d("MainActivity", "Search button found.");
-            searchButton.setVisibility(View.VISIBLE);
-        }
 
-        if (searchButton != null) {
-            searchButton.setOnClickListener(v -> {
-                String query = searchEditText.getText().toString().trim();
-                if (!query.isEmpty()) {
-                    searchMovies(query);
-                } else {
-                    Toast.makeText(MainActivity.this, "Please enter a movie name", Toast.LENGTH_SHORT).show();
-                }
-            });
+        if (searchButton == null) {
+            Log.e("MainActivity", "searchButton is NULL! Check activity_main.xml.");
+            Toast.makeText(this, "Error: Search button is missing!", Toast.LENGTH_LONG).show();
+        } else {
+            Log.d("MainActivity", "searchButton found");
+            searchButton.setVisibility(View.VISIBLE);
+            searchButton.setOnClickListener(v -> searchMovies(searchEditText.getText().toString()));
         }
     }
 
     private void searchMovies(String title) {
+        if (title.isEmpty()) {
+            Toast.makeText(this, "Please enter a movie name!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Log.d("MainActivity", "🔍 Searching for: " + title);
+
         String apiKey = "59c74b7b";
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
         apiService.getMovies(title, apiKey).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                if (response.body() != null && response.body().getSearch() != null) {
+                if (response.body() != null) {
                     movieAdapter = new MovieAdapter(MainActivity.this, response.body().getSearch());
                     movieRecyclerView.setAdapter(movieAdapter);
+                    Log.d("MainActivity", "Movies loaded");
                 } else {
+                    Log.e("MainActivity", "No movies found!");
                     Toast.makeText(MainActivity.this, "No movies found!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
+                Log.e("MainActivity", "Error fetching data: " + t.getMessage(), t);
                 Toast.makeText(MainActivity.this, "Failed to fetch movie data. Please try again.", Toast.LENGTH_SHORT).show();
-                Log.e("MovieSearch", "Error fetching data: " + t.getMessage(), t);
             }
         });
     }
