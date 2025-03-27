@@ -60,7 +60,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.body() != null) {
-                    // Update UI with movie details
+
                     Movie movie = response.body();
                     plotTextView.setText(movie.getPlot());
                     ImageView moviePosterImageView = null;
